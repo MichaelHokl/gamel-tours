@@ -209,7 +209,9 @@ function App() {
       <Header />
       <TripList />
       <GameList />
+      <FoodList />
       <AllergyForm />
+      <AllergyList />
       <Summary />
     </div>
   );
@@ -217,11 +219,13 @@ function App() {
 
 function Header() {
   return (
-    <header>
-      <h1>
-        welcome to <span aria-label="Gamel">gamel</span> paradise
+    <header aria-labelledby="headerH1">
+      <h1 id="headerH1">
+        welcome to <span aria-label="Gamel">Gamel!!!</span> paradise
       </h1>
-      <h2>a place where we combine games and travel</h2>
+      <h2>
+        a place where we combine games and travel. So we <span>Gamel!!!</span>
+      </h2>
       <p>Here is how it works:</p>
       <ol aria-label="How it works">
         <li>Select your trip</li>
@@ -238,24 +242,36 @@ function Header() {
 
 function TripList() {
   return (
-    <ul>
-      {tripData.map((trip) => (
-        <Trip tripObj={trip} />
-      ))}
-    </ul>
+    <div>
+      <h2 id="tripListTitle">our trips</h2>
+      <p>Please choose your travel destination.</p>
+      <ul aria-labelledby="tripListTitle">
+        {tripData.map((trip) => (
+          <Trip key={trip.id} tripObj={trip} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function Trip({ tripObj }) {
   return (
     <li>
-      <img src={tripObj.photo} alt={tripObj.title}></img>
+      <img src={tripObj.photo} alt={tripObj.title} />
       <div>
         <h3>{tripObj.title}</h3>
-        <p>{tripObj.participants}</p>
-        <p>{tripObj.duration}</p>
-        <p>{tripObj.description}</p>
-        <span>${tripObj.price}</span>
+        <p>
+          <strong>Participants:</strong> {tripObj.participants}
+        </p>
+        <p>
+          <strong>Trip duration:</strong> {tripObj.duration}
+        </p>
+        <p>
+          <strong>What you will do:</strong> {tripObj.description}
+        </p>
+        <p>
+          <strong>Price:</strong> ${tripObj.price}
+        </p>
       </div>
     </li>
   );
@@ -263,33 +279,149 @@ function Trip({ tripObj }) {
 
 function GameList() {
   return (
-    <ul>
-      {gamesData.map((game) => (
-        <Trip gameObj={game} />
-      ))}
-    </ul>
+    <div>
+      <h2 id="gameListTitle">our games</h2>
+      <p>Please choose what games you want to include on your trip.</p>
+      <ul aria-labelledby="gameListTitle">
+        {gamesData.map((game) => (
+          <Game key={game.id} gameObj={game} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function Game({ gameObj }) {
   return (
     <li>
-      <img src={gameObj.photo} alt={gameObj.title}></img>
+      <img src={gameObj.photo} alt={gameObj.title} />
       <div>
         <h3>{gameObj.title}</h3>
-        <p>{gameObj.players}</p>
-        <p>{gameObj.playtime}</p>
+        <p>
+          <strong>Players:</strong> {gameObj.players}
+        </p>
+        <p>
+          <strong>Estimated playtime:</strong> {gameObj.playtime} minutes
+        </p>
       </div>
     </li>
   );
 }
 
-function FoodList() {}
+function FoodList() {
+  return (
+    <div>
+      <h2 id="foodListTitle">our food list</h2>
+      <p>Please choose what you want to eat during your trip.</p>
+      <ul aria-labelledby="foodListTitle">
+        {foodData.map((food) => (
+          <Food key={food.id} foodObj={food} />
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-function Food() {}
+function Food({ foodObj }) {
+  return (
+    <li>
+      <img src={foodObj.photo} alt={foodObj.name} />
+      <div>
+        <h3>{foodObj.name}</h3>
+        <p>
+          <strong>Portion:</strong> {foodObj.portion}
+        </p>
+        <p>
+          <strong>Price:</strong> ${foodObj.price}
+        </p>
+        <p>
+          <strong>Ingredients:</strong> {foodObj.description}
+        </p>
+      </div>
+    </li>
+  );
+}
 
-function AllergyForm() {}
+function AllergyForm() {
+  return (
+    <div>
+      <h2>Your Allergies</h2>
+      <p>
+        Please list all of your allergies. If you don't have any, just skip this
+        section.
+      </p>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label htmlFor="allergyInput">My allergies:</label>
+        <input
+          id="allergyInput"
+          type="text"
+          placeholder="e.g., peanuts, shellfish"
+        />
+        <button type="submit">Add to list</button>
+      </form>
+    </div>
+  );
+}
 
-function Summary() {}
+const dummyAllergies = [
+  { id: "a1", name: "Peanuts" },
+  { id: "a2", name: "Shellfish" },
+  { id: "a3", name: "Gluten" },
+  { id: "a4", name: "Dairy" },
+  { id: "a5", name: "Soy" },
+  { id: "a6", name: "Eggs" },
+  { id: "a7", name: "Tree Nuts" },
+  { id: "a8", name: "Fish" },
+];
+
+function AllergyList() {
+  return (
+    <ul aria-label="allergy-list">
+      {dummyAllergies.map((allergy) => (
+        <li key={allergy.id}>{allergy.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+function Summary() {
+  return (
+    <footer>
+      <h2>Your Trip Summary</h2>
+      <h3>Trip Summary</h3>
+      <ul aria-label="trip-summary">
+        <li>
+          New York City <span>1X</span>
+        </li>
+      </ul>
+      <h3>Food Summary</h3>
+      <ul aria-label="food-summary">
+        <li>
+          Chicken Salad <span>3X</span>
+        </li>
+        <li>
+          Cheese Pizza <span>4X</span>
+        </li>
+        <li>
+          Fruit Platter <span>3X</span>
+        </li>
+        <li>
+          Vegan Sandwich <span>6X</span>
+        </li>
+      </ul>
+      <h3>Your Allergies</h3>
+      <ul aria-label="summary-allergy-list">
+        {dummyAllergies.map((allergy) => (
+          <li key={allergy.id}>{allergy.name}</li>
+        ))}
+      </ul>
+      <p>
+        Please check if everything is correct. If yes, click on the{" "}
+        <strong>"Book Now"</strong> button.
+      </p>
+      <button type="button">Book Now</button>
+    </footer>
+  );
+}
 
 export default App;
