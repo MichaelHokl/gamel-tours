@@ -205,6 +205,9 @@ const tripData = [
 
 function App() {
   const [allergies, setAllergies] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [games, setGames] = useState([]);
   return (
     <div className="App">
       <Header />
@@ -213,7 +216,12 @@ function App() {
       <FoodList />
       <AllergyForm />
       <AllergyList allergies={allergies} />
-      <Summary allergies={allergies} />
+      <Summary
+        allergies={allergies}
+        trips={trips}
+        foods={foods}
+        games={games}
+      />
     </div>
   );
 }
@@ -400,6 +408,27 @@ function Summary({ allergies }) {
           </ul>
         </div>
 
+        <div className="list_summary">
+          <h3>Game Summary</h3>
+          <ul aria-label="food-summary">
+            <li>
+              <button>❌</button>
+              Chicken Salad <span>3X</span>
+            </li>
+            <li>
+              <button>❌</button>
+              Cheese Pizza <span>4X</span>
+            </li>
+            <li>
+              <button>❌</button>
+              Fruit Platter <span>3X</span>
+            </li>
+            <li>
+              <button>❌</button>
+              Vegan Sandwich <span>6X</span>
+            </li>
+          </ul>
+        </div>
         <div className="list_summary">
           <h3>Food Summary</h3>
           <ul aria-label="food-summary">
