@@ -222,21 +222,6 @@ function App() {
     setText("");
   }
 
-  function handleTrips(id) {
-    const newTrip = tripData.find((trip) => trip.id === id);
-    setTrips([...trips, newTrip]);
-  }
-
-  function handleFoods(id) {
-    const newFood = foodData.find((food) => food.id === id);
-    setFoods([...foods, newFood]);
-  }
-
-  function handleGames(id) {
-    const newGame = gamesData.find((game) => game.id === id);
-    setGames([...games, newGame]);
-  }
-
   function handleItems(id, dataArray, state, setState) {
     const newItem = dataArray.find((item) => item.id === id);
     setState([...state, newItem]);
@@ -249,9 +234,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <TripList onAddTrip={handleItems} state={(setTrips, trips)} />
-      <GameList onAddGame={handleItems} state={(setGames, games)}/>
-      <FoodList onAddFood={handleItems} state={()}/>
+      <TripList onAddTrip={handleItems} state={{ setTrips, trips }} />
+      <GameList onAddGame={handleItems} state={{ setGames, games }} />
+      <FoodList onAddFood={handleItems} state={{ setFoods, foods }} />
       <AllergyForm
         text={text}
         onAddText={handleText}
@@ -299,23 +284,29 @@ function Header() {
   );
 }
 
-function TripList({ onAddTrip }) {
+function TripList({ onAddTrip, state }) {
   return (
     <div className="container">
       <h2 id="tripListTitle">our trips</h2>
       <p>Please choose your travel destination.</p>
       <ul aria-labelledby="tripListTitle">
         {tripData.map((trip) => (
-          <Trip key={trip.id} tripObj={trip} onAddTrip={onAddTrip} />
+          <Trip
+            key={trip.id}
+            tripObj={trip}
+            onAddTrip={onAddTrip}
+            state={state}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Trip({ tripObj, onAddTrip }) {
+function Trip({ tripObj, onAddTrip, state }) {
+  const { setTrips, trips } = state;
   return (
-    <li onClick={() => onAddTrip(tripObj.id)}>
+    <li onClick={() => onAddTrip(tripObj.id, tripData, trips, setTrips)}>
       <img src={tripObj.photo} alt={tripObj.title} />
       <div className="details">
         <h3>{tripObj.title}</h3>
@@ -336,23 +327,29 @@ function Trip({ tripObj, onAddTrip }) {
   );
 }
 
-function GameList({ onAddGame }) {
+function GameList({ onAddGame, state }) {
   return (
     <div className="container">
       <h2 id="gameListTitle">our games</h2>
       <p>Please choose what games you want to include on your trip.</p>
       <ul aria-labelledby="gameListTitle">
         {gamesData.map((game) => (
-          <Game key={game.id} gameObj={game} onAddGame={onAddGame} />
+          <Game
+            key={game.id}
+            gameObj={game}
+            onAddGame={onAddGame}
+            state={state}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Game({ gameObj, onAddGame }) {
+function Game({ gameObj, onAddGame, state }) {
+  const { games, setGames } = state;
   return (
-    <li onClick={() => onAddGame(gameObj.id)}>
+    <li onClick={() => onAddGame(gameObj.id, gamesData, games, setGames)}>
       <img src={gameObj.photo} alt={gameObj.title} />
       <div className="details">
         <h3>{gameObj.title}</h3>
@@ -367,23 +364,29 @@ function Game({ gameObj, onAddGame }) {
   );
 }
 
-function FoodList({ onAddFood }) {
+function FoodList({ onAddFood, state }) {
   return (
     <div className="container">
       <h2 id="foodListTitle">our food list</h2>
       <p>Please choose what you want to eat during your trip.</p>
       <ul aria-labelledby="foodListTitle">
         {foodData.map((food) => (
-          <Food key={food.id} foodObj={food} onAddFood={onAddFood} />
+          <Food
+            key={food.id}
+            foodObj={food}
+            onAddFood={onAddFood}
+            state={state}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Food({ foodObj, onAddFood }) {
+function Food({ foodObj, onAddFood, state }) {
+  const { foods, setFoods } = state;
   return (
-    <li onClick={() => onAddFood(foodObj.id)}>
+    <li onClick={() => onAddFood(foodObj.id, foodData, foods, setFoods)}>
       <img src={foodObj.photo} alt={foodObj.name} />
       <div className="details">
         <h3>{foodObj.name}</h3>
