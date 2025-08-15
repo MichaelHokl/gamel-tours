@@ -258,6 +258,10 @@ form button {
   background-color: #f4f1de;
 }
 
+.warning {
+  padding: 3rem 0;
+}
+
 .footer h3 {
   margin-top: 4rem;
 }

@@ -208,19 +208,64 @@ function App() {
   const [trips, setTrips] = useState([]);
   const [foods, setFoods] = useState([]);
   const [games, setGames] = useState([]);
+  const [text, setText] = useState("");
+
+  function handleText(e) {
+    setText((e = e.target.value));
+  }
+
+  function handleSetAllergies(e) {
+    const newAllergie = { name: text, id: Date.now() };
+    e.preventDefault();
+    if (!text) return;
+    setAllergies([...allergies, newAllergie]);
+    setText("");
+  }
+
+  function handleTrips(id) {
+    const newTrip = tripData.find((trip) => trip.id === id);
+    setTrips([...trips, newTrip]);
+  }
+
+  function handleFoods(id) {
+    const newFood = foodData.find((food) => food.id === id);
+    setFoods([...foods, newFood]);
+  }
+
+  function handleGames(id) {
+    const newGame = gamesData.find((game) => game.id === id);
+    setGames([...games, newGame]);
+  }
+
+  function handleItems(id, dataArray, state, setState) {
+    const newItem = dataArray.find((item) => item.id === id);
+    setState([...state, newItem]);
+  }
+
+  function deleteItem(id, setState, state) {
+    setState(state.filter((item) => item.id !== id));
+  }
+
   return (
     <div className="App">
       <Header />
-      <TripList />
-      <GameList />
-      <FoodList />
-      <AllergyForm />
-      <AllergyList allergies={allergies} />
-      <Summary
+      <TripList onAddTrip={handleItems} state={(setTrips, trips)} />
+      <GameList onAddGame={handleItems} state={(setGames, games)}/>
+      <FoodList onAddFood={handleItems} state={()}/>
+      <AllergyForm
+        text={text}
+        onAddText={handleText}
+        onAddAllergie={handleSetAllergies}
+      />
+      <AllergyList
         allergies={allergies}
-        trips={trips}
-        foods={foods}
-        games={games}
+        deleteItem={deleteItem}
+        setState={setAllergies}
+      />
+      <Summary
+        state={{ trips, foods, games, allergies }}
+        setters={{ setTrips, setFoods, setGames, setAllergies }}
+        deleteItem={deleteItem}
       />
     </div>
   );
@@ -254,23 +299,23 @@ function Header() {
   );
 }
 
-function TripList() {
+function TripList({ onAddTrip }) {
   return (
     <div className="container">
       <h2 id="tripListTitle">our trips</h2>
       <p>Please choose your travel destination.</p>
       <ul aria-labelledby="tripListTitle">
         {tripData.map((trip) => (
-          <Trip key={trip.id} tripObj={trip} />
+          <Trip key={trip.id} tripObj={trip} onAddTrip={onAddTrip} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Trip({ tripObj }) {
+function Trip({ tripObj, onAddTrip }) {
   return (
-    <li>
+    <li onClick={() => onAddTrip(tripObj.id)}>
       <img src={tripObj.photo} alt={tripObj.title} />
       <div className="details">
         <h3>{tripObj.title}</h3>
@@ -291,23 +336,23 @@ function Trip({ tripObj }) {
   );
 }
 
-function GameList() {
+function GameList({ onAddGame }) {
   return (
     <div className="container">
       <h2 id="gameListTitle">our games</h2>
       <p>Please choose what games you want to include on your trip.</p>
       <ul aria-labelledby="gameListTitle">
         {gamesData.map((game) => (
-          <Game key={game.id} gameObj={game} />
+          <Game key={game.id} gameObj={game} onAddGame={onAddGame} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Game({ gameObj }) {
+function Game({ gameObj, onAddGame }) {
   return (
-    <li>
+    <li onClick={() => onAddGame(gameObj.id)}>
       <img src={gameObj.photo} alt={gameObj.title} />
       <div className="details">
         <h3>{gameObj.title}</h3>
@@ -322,23 +367,23 @@ function Game({ gameObj }) {
   );
 }
 
-function FoodList() {
+function FoodList({ onAddFood }) {
   return (
     <div className="container">
       <h2 id="foodListTitle">our food list</h2>
       <p>Please choose what you want to eat during your trip.</p>
       <ul aria-labelledby="foodListTitle">
         {foodData.map((food) => (
-          <Food key={food.id} foodObj={food} />
+          <Food key={food.id} foodObj={food} onAddFood={onAddFood} />
         ))}
       </ul>
     </div>
   );
 }
 
-function Food({ foodObj }) {
+function Food({ foodObj, onAddFood }) {
   return (
-    <li>
+    <li onClick={() => onAddFood(foodObj.id)}>
       <img src={foodObj.photo} alt={foodObj.name} />
       <div className="details">
         <h3>{foodObj.name}</h3>
@@ -356,7 +401,7 @@ function Food({ foodObj }) {
   );
 }
 
-function AllergyForm() {
+function AllergyForm({ text, onAddText, onAddAllergie }) {
   return (
     <div className="container">
       <h2>Your Allergies</h2>
@@ -364,13 +409,15 @@ function AllergyForm() {
         Please list all of your allergies. If you don't have any, just skip this
         section.
       </p>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={onAddAllergie}>
         <label htmlFor="allergyInput">My allergies:</label>
         <div className="input_btn">
           <input
             id="allergyInput"
             type="text"
             placeholder="e.g., peanuts, shellfish"
+            value={text}
+            onChange={onAddText}
           />
           <button type="submit">Add to list</button>
         </div>
@@ -379,13 +426,15 @@ function AllergyForm() {
   );
 }
 
-function AllergyList({ allergies }) {
+function AllergyList({ allergies, deleteItem, setState }) {
   return (
     <div className="allergy_container">
       <ul aria-label="allergy-list" className="allergy_list container">
         {allergies.map((allergy) => (
           <li key={allergy.id}>
-            <button>❌</button>
+            <button onClick={() => deleteItem(allergy.id, setState, allergies)}>
+              ❌
+            </button>
             {allergy.name}
           </li>
         ))}
@@ -394,73 +443,95 @@ function AllergyList({ allergies }) {
   );
 }
 
-function Summary({ allergies }) {
+function Summary(props) {
+  const { trips, foods, games, allergies } = props.state;
+  const { setTrips, setFoods, setGames, setAllergies } = props.setters;
+  const { deleteItem } = props;
+
+  const noSelections =
+    trips.length === 0 &&
+    games.length === 0 &&
+    foods.length === 0 &&
+    allergies.length === 0;
+
   return (
     <footer className="footer">
       <h2>Your Trip Summary</h2>
       <div className="footer_summary">
-        <div className="trip_summary">
-          <h3>Trip Summary</h3>
-          <ul aria-label="trip-summary">
-            <li>
-              New York City <span>1X</span>
-            </li>
-          </ul>
-        </div>
+        {noSelections ? (
+          <p className="warning">
+            Please choose a trip, games, what you want to eat and let us know
+            about your allergies.
+          </p>
+        ) : (
+          <>
+            <div className="trip_summary">
+              <h3>Trip Summary</h3>
+              <ul aria-label="trip-summary">
+                {trips.map((trip) => (
+                  <li key={trip.id}>
+                    <button
+                      onClick={() => deleteItem(trip.id, setTrips, trips)}
+                    >
+                      ❌
+                    </button>
+                    {trip.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        <div className="list_summary">
-          <h3>Game Summary</h3>
-          <ul aria-label="food-summary">
-            <li>
-              <button>❌</button>
-              Chicken Salad <span>3X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Cheese Pizza <span>4X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Fruit Platter <span>3X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Vegan Sandwich <span>6X</span>
-            </li>
-          </ul>
-        </div>
-        <div className="list_summary">
-          <h3>Food Summary</h3>
-          <ul aria-label="food-summary">
-            <li>
-              <button>❌</button>
-              Chicken Salad <span>3X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Cheese Pizza <span>4X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Fruit Platter <span>3X</span>
-            </li>
-            <li>
-              <button>❌</button>
-              Vegan Sandwich <span>6X</span>
-            </li>
-          </ul>
-        </div>
-        <div className="allergy_summary">
-          <h3>Your Allergies</h3>
-          <ul aria-label="summary-allergy-list">
-            {allergies.map((allergy) => (
-              <li key={allergy.id}>
-                <button>❌</button>
-                {allergy.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+            <div className="list_summary">
+              <h3>Game Summary</h3>
+              <ul aria-label="game-summary">
+                {games.map((game) => (
+                  <li key={game.id}>
+                    <button
+                      onClick={() => deleteItem(game.id, setGames, games)}
+                    >
+                      ❌
+                    </button>
+                    {game.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="list_summary">
+              <h3>Food Summary</h3>
+              <ul aria-label="food-summary">
+                {foods.map((food) => (
+                  <li key={food.id}>
+                    <button
+                      onClick={() => deleteItem(food.id, setFoods, foods)}
+                    >
+                      ❌
+                    </button>
+                    {food.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="allergy_summary">
+              <h3>Your Allergies</h3>
+              <ul aria-label="summary-allergy-list">
+                {allergies.map((allergy) => (
+                  <li key={allergy.id}>
+                    <button
+                      onClick={() =>
+                        deleteItem(allergy.id, setAllergies, allergies)
+                      }
+                    >
+                      ❌
+                    </button>
+                    {allergy.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </>
+        )}
       </div>
 
       <p>
@@ -475,7 +546,3 @@ function Summary({ allergies }) {
 }
 
 export default App;
-<li>
-  <button>❌</button>
-  Chicken Salad <span>3X</span>
-</li>;
