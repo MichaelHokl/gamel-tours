@@ -5,29 +5,408 @@
 }
 
 html {
-  font-size: 62.5%; /* 16px * 0.625 = 10px */
+  font-size: 62.5%;
 }
 
 body {
   width: 100%;
   min-height: 100%;
-  padding: 2rem;
+  color: #4b3b2a;
+  background-color: #f4f1de;
 }
-
+button:hover {
+  transform: scale(1.05);
+}
 h1,
 h2,
 h3 {
   text-transform: capitalize;
+  font-family: "GoudyBookletter", sans-serif;
+}
+
+h1,
+h2 {
+  text-align: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 5.6rem;
+  color: #13100f;
+  margin-bottom: 5rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+  margin-top: 5rem;
+  color: #b03a2e;
+}
+
+h3 {
+  font-size: 2rem;
+  color: #6e2c00;
+}
+
+p,
+li,
+label {
+  font-size: 1.6rem;
+  font-family: "Quicksand", serif;
+  font-weight: 500;
+}
+
+ol {
+  list-style-position: inside;
+}
+
+ul {
+  list-style: none;
+  list-style-position: inside;
 }
 
 header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.4) 70%),
+    url(https://images.pexels.com/photos/7150645/pexels-photo-7150645.jpeg)
+      no-repeat center/cover;
+  background-size: cover;
+  padding: 9rem 2rem;
+  height: 100vh;
 }
+
+header h1 {
+  color: white;
+}
+
+header h2 {
+  font-size: 2rem;
+  color: white;
+  margin-top: 0;
+}
+header p {
+  margin-top: 4rem;
+  font-size: 2.2rem;
+  font-weight: bolder;
+  color: white;
+}
+
+header li {
+  color: white;
+  font-size: 2rem;
+}
+
+.name {
+  color: red;
+}
+
 img {
   width: 100%;
   height: auto;
+  display: block;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.container {
+  width: 100%;
+  padding: 2.4rem;
+}
+
+.container:nth-of-type(2n) {
+  background-color: white;
+}
+
+.container ul {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.container ul li {
+  box-shadow: 0 0 4px 3px black;
+  border-radius: 1rem;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.container li:hover {
+  transform: scale(1.05);
+}
+
+.container p:first-of-type {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
+.details {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 2rem 1rem;
+  gap: 2rem;
+  background-color: white;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.container:nth-of-type(2n) .details {
+  background-color: #f4f1de;
+  flex-grow: 1;
+}
+
+.price {
+  font-size: 2.3rem;
+}
+
+label {
+  display: block;
+  margin-top: 3rem;
+}
+
+input {
+  padding: 0.5rem 1rem;
+  border-radius: 4rem 0 0 4rem;
+  border-right: none;
+  flex-grow: 1;
+  border: 2px solid #ee964b;
+}
+
+input::placeholder {
+  font-size: 1.6rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+form button {
+  border-left: none;
+  border-radius: 0 4rem 4rem 0;
+  padding: 0.5rem 1rem;
+  width: 40%;
+  font-size: 2.2rem;
+  border: 0.2rem solid transparent;
+  background-color: #f95738;
+}
+
+.input_btn {
+  width: 100%;
+  display: flex;
+}
+
+.allergy_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.allergy_list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 1rem;
+  padding: 1rem 4rem;
+  max-width: 110rem;
+  width: 80%;
+}
+
+.allergy_list li {
+  font-size: 2rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.allergy_list button,
+.footer button {
+  margin-right: 1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+}
+.footer {
+  padding: 2.4rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.footer_summary {
+  max-width: 110rem;
+  width: 80%;
+}
+
+.footer ul {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem 1rem;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+  box-shadow: 0 0 4px 3px black;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #f4f1de;
+}
+
+.footer h3 {
+  margin-top: 4rem;
+}
+
+.footer p:last-of-type {
+  font-size: 2.4rem;
+  text-align: center;
+}
+.book_button {
+  width: 100%;
+  background: #f95738 !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 2.5rem;
+  margin-top: 3rem;
+  border-radius: 4rem;
+}
+
+@media (min-width: 450px) {
+  .container ul li {
+    margin-top: 4rem;
+  }
+
+  .details {
+    gap: 1rem;
+  }
+
+  strong {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .container ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 1rem;
+  }
+
+  header {
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+  }
+  .input_btn {
+    max-width: 60rem;
+  }
+
+  form {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column;
+  }
+
+  label {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .book_button {
+    max-width: 550px;
+    font-size: 2.8rem;
+    padding: 2rem !important;
+  }
+}
+
+@media (min-width: 760px) {
+  .container ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    justify-self: center;
+  }
+
+  .allergy_list {
+    padding: 4rem 3rem;
+  }
+
+  header ol {
+    justify-self: center;
+  }
+
+  img {
+    height: auto;
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .container ul li {
+    width: 22rem;
+  }
+
+  .details {
+    border-radius: 0 0 1rem 1rem;
+    width: 100%;
+  }
+
+  .footer_summary {
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 4px 3px black;
+    justify-content: space-evenly;
+    border-radius: 1rem;
+    background-color: #f4f1de;
+    margin: 3rem 0;
+    max-width: 110rem;
+  }
+
+  .footer ul {
+    box-shadow: none;
+    background-color: transparent;
+    padding: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .container ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .container ul li {
+    width: 40rem;
+  }
+
+  h3 {
+    font-size: 3.6rem;
+  }
+
+  strong {
+    font-size: 2.4rem;
+  }
+
+  p {
+    font-size: 2.2rem;
+  }
+
+  li {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 4.2rem;
+  }
+  h1 {
+    font-size: 8.2rem;
+  }
+
+  header p {
+    font-size: 3.6rem;
+  }
+  header h2 {
+    font-size: 4.6rem;
+  }
 }
