@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# Game Travel Planner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Welcome to Gamel!**Gamel is a fully responsive React application where users can plan a trip, select games to play, choose food options, and provide allergy information — all in one place. This app was created purely as a practice project to sharpen React skills, with a focus on **state management, props, component communication, and dynamic rendering**.
 
-## Available Scripts
+> ⚠️ **Disclaimer:** This app has no real-world use beyond practice and learning. It was designed as a sandbox for experimenting with React fundamentals.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+1.  [Features](#features)
+2.  [Technologies Used](#technologies-used)
+3.  [Getting Started](#getting-started)
+4.  [App Structure](#app-structure)
+5.  [How It Works](#how-it-works)
+6.  [Future Improvements](#future-improvements)
+7.  [Lessons Learned](#lessons-learned)
+8.  [Call to Action](#call-to-action)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Fully **responsive layout** that works across desktop, tablet, and mobile devices.
+- **Trip selection** with images, participant ranges, duration, and descriptions.
+- **Game selection** with detailed info: player count, estimated playtime, and sold-out status.
+- **Food selection** including portion size, description, and price.
+- **Allergy form** to add/remove allergies dynamically.
+- **Summary section** that displays all selected items with the ability to remove them.
+- Built with **React** using useState and props for dynamic interactivity.
 
-### `npm test`
+> ⚡ **Controversial takeaway:** Who needs a fully polished UI/UX if the app works correctly and teaches you **why** React works the way it does?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies Used
 
-### `npm run build`
+- **React** – UI library for building interactive components.
+- **React Hooks (useState)** – Manage dynamic state across components.
+- **Props** – Pass data and handlers between parent and child components.
+- **CSS** – Custom styling and layout.
+- **GitHub Pages** – Deployment for static React apps.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To run this project locally:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.  **Clone the repository**
 
-### `npm run eject`
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML` git clone https://github.com/MichaelHokl/gamel-tours.git `
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1.  **Install dependencies**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML` cd gamel-tours  npm install `
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1.  **Start development server**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML` npm start `
 
-## Learn More
+1.  **Build and deploy** (for GitHub Pages)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML` npm run build  npm run deploy `
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Make sure the homepage property in package.json is correctly set to "https://MichaelHokl.github.io/gamel-tours".
 
-### Code Splitting
+## App Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML` /public    /images       # All game, food, and trip images  /src    App.js        # Main app component    index.css     # Styling for the entire app `
 
-### Analyzing the Bundle Size
+- **App.js** – Main component that manages the state for trips, games, food, and allergies. Renders child components: Header, TripList, GameList, FoodList, AllergyForm, AllergyList, Summary.
+- **Data Arrays** – gamesData, foodData, tripData are stored as arrays in App.js for easy state management and rendering.
+- **Components** – Functional components with clear separation of concerns: each list (games, trips, food) and summary section is modular.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## How It Works
 
-### Making a Progressive Web App
+1.  **Select Trips** – Click on a trip to add it to your summary.
+2.  **Select Games** – Click on the desired games; sold-out games can be identified visually.
+3.  **Select Food** – Click on food items to add them to your trip plan.
+4.  **Add Allergies** – Enter any allergies and submit; the list dynamically updates.
+5.  **Summary Section** – Displays all selections with the ability to remove items individually.
+6.  **Book Now** – Placeholder button to simulate finalizing the selection.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> Every interaction teaches a practical React lesson about **state updates, props communication, dynamic rendering, and event handling**.
 
-### Advanced Configuration
+## Future Improvements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Add **pop-up notifications** when items are added to the summary.
+- Implement **form validation** for allergies input.
+- Enhance **UI/UX** with better visual hierarchy, animations, and interactive feedback.
+- Convert the app into a **full-stack project** by connecting to a backend database for real trips and bookings.
 
-### Deployment
+## Lessons Learned
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Props & State:** Learned the "big why" behind passing props and managing state in functional components.
+- **Dynamic Rendering:** Practiced mapping over arrays to dynamically generate UI components.
+- **Event Handling:** Learned how to handle form submissions, clicks, and conditional rendering efficiently.
+- **Responsiveness:** Experienced the challenges of designing a layout that works across different screen sizes.
 
-### `npm run build` fails to minify
+> 🔥 **Truth bomb:** You don’t need a production-ready product to learn deeply — sometimes, practice apps teach more than real-world projects.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Call to Action
+
+I’m actively looking for a **React intern position** where I can further grow my skills and contribute to real projects.
+
+If you’re hiring or know a company looking for someone passionate about React, state management, and building intuitive apps, **let’s connect!**
+
+[Connect with me on LinkedIn](https://www.linkedin.com/in/michaelhokl)
