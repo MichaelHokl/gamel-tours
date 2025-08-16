@@ -209,9 +209,17 @@ function App() {
   const [foods, setFoods] = useState([]);
   const [games, setGames] = useState([]);
   const [text, setText] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   function handleText(e) {
-    setText((e = e.target.value));
+    setText(e.target.value);
+  }
+
+  function triggerPopup(message) {
+    setPopupMessage(message);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2000); // hide after 2 seconds
   }
 
   function handleSetAllergies(e) {
@@ -220,13 +228,19 @@ function App() {
     if (!text) return;
     setAllergies([...allergies, newAllergie]);
     setText("");
+    triggerPopup(`${newAllergie.name} added to your allergies`);
   }
 
   function deleteAllergy(id) {
+    const removed = allergies.find((allergy) => allergy.id === id);
     setAllergies(allergies.filter((allergy) => allergy.id !== id));
+
+    if (removed) {
+      triggerPopup(`${removed.name} removed from your allergies`);
+    }
   }
 
-  function handleItems(id, dataArray, state, setState) {
+  function handleItems(id, dataArray, state, setState, triggerPopup) {
     const existingItem = state.find((item) => item.id === id);
 
     if (existingItem) {
@@ -235,28 +249,51 @@ function App() {
           item.id === id ? { ...item, amount: item.amount + 1 } : item
         )
       );
+      triggerPopup(`${existingItem.title || existingItem.name} added`);
     } else {
       const newItem = dataArray.find((item) => item.id === id);
       setState([...state, { ...newItem, amount: 1 }]);
+      triggerPopup(`${newItem.title || newItem.name} added`);
     }
   }
 
   function deleteItem(id, setState, state) {
+    const item = state.find((i) => i.id === id);
     setState(
       state
-        .map((item) =>
-          item.id === id ? { ...item, amount: item.amount - 1 } : item
-        )
-        .filter((item) => item.amount > 0)
+        .map((i) => (i.id === id ? { ...i, amount: i.amount - 1 } : i))
+        .filter((i) => i.amount > 0)
     );
+
+    if (item) {
+      triggerPopup(`${item.title || item.name} removed`);
+    }
   }
 
   return (
     <div className="App">
       <Header />
-      <TripList onAddTrip={handleItems} state={{ setTrips, trips }} />
-      <GameList onAddGame={handleItems} state={{ setGames, games }} />
-      <FoodList onAddFood={handleItems} state={{ setFoods, foods }} />
+      <TripList
+        onAddTrip={(id) =>
+          handleItems(id, tripData, trips, setTrips, triggerPopup)
+        }
+        state={{ trips, setTrips }}
+      />
+
+      <GameList
+        onAddGame={(id) =>
+          handleItems(id, gamesData, games, setGames, triggerPopup)
+        }
+        state={{ games, setGames }}
+      />
+
+      <FoodList
+        onAddFood={(id) =>
+          handleItems(id, foodData, foods, setFoods, triggerPopup)
+        }
+        state={{ foods, setFoods }}
+      />
+
       <AllergyForm
         text={text}
         onAddText={handleText}
@@ -264,15 +301,15 @@ function App() {
       />
       <AllergyList
         allergies={allergies}
-        deleteItem={deleteItem}
+        deleteItem={deleteAllergy}
         setState={setAllergies}
       />
       <Summary
         state={{ trips, foods, games, allergies }}
         setters={{ setTrips, setFoods, setGames, setAllergies }}
         deleteItem={deleteItem}
-        deleteAllergy={deleteAllergy}
       />
+      {showPopup && <div className="popup">{popupMessage}</div>}
     </div>
   );
 }
@@ -367,10 +404,9 @@ function GameList({ onAddGame, state }) {
   );
 }
 
-function Game({ gameObj, onAddGame, state }) {
-  const { games, setGames } = state;
+function Game({ gameObj, onAddGame }) {
   return (
-    <li onClick={() => onAddGame(gameObj.id, gamesData, games, setGames)}>
+    <li onClick={() => onAddGame(gameObj.id)}>
       <img src={gameObj.photo} alt={gameObj.title} />
       <div className="details">
         <h3>{gameObj.title}</h3>
@@ -379,6 +415,9 @@ function Game({ gameObj, onAddGame, state }) {
         </p>
         <p>
           <strong>Estimated playtime:</strong> {gameObj.playtime} minutes
+        </p>
+        <p className="price">
+          <strong>Price:</strong> ${gameObj.price}
         </p>
       </div>
     </li>
@@ -404,10 +443,9 @@ function FoodList({ onAddFood, state }) {
   );
 }
 
-function Food({ foodObj, onAddFood, state }) {
-  const { foods, setFoods } = state;
+function Food({ foodObj, onAddFood }) {
   return (
-    <li onClick={() => onAddFood(foodObj.id, foodData, foods, setFoods)}>
+    <li onClick={() => onAddFood(foodObj.id)}>
       <img src={foodObj.photo} alt={foodObj.name} />
       <div className="details">
         <h3>{foodObj.name}</h3>
@@ -469,7 +507,7 @@ function AllergyList({ allergies, deleteItem, setState }) {
 
 function Summary(props) {
   const { trips, foods, games, allergies } = props.state;
-  const { setTrips, setFoods, setGames, setAllergies } = props.setters;
+  const { setTrips, setFoods, setGames } = props.setters;
   const { deleteItem, deleteAllergy } = props;
 
   const noSelections =

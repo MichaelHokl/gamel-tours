@@ -113,6 +113,10 @@ img {
 .container {
   width: 100%;
   padding: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container:nth-of-type(2n) {
@@ -245,6 +249,23 @@ form button {
   max-width: 160rem;
   width: 80%;
 }
+.popup {
+  position: fixed;
+  bottom: 10%;
+  right: 50%;
+  transform: translateX(50%);
+  padding: 3rem;
+  background-color: red;
+  color: black;
+  box-shadow: 0 0 4px 3px black;
+  font-size: 2.4rem;
+  border-radius: 1rem;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 .footer ul {
   display: grid;
@@ -301,9 +322,11 @@ foote li:hover {
   .container ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0 1rem;
+    gap: 2rem;
   }
-
+  .container li {
+    width: 25rem;
+  }
   header {
     height: 80vh;
     align-items: center;
@@ -336,7 +359,7 @@ foote li:hover {
   .container ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4rem;
+    gap: 2rem;
     justify-self: center;
   }
 
@@ -382,10 +405,11 @@ foote li:hover {
 @media (min-width: 1200px) {
   .container ul {
     grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
   }
 
   .container ul li {
-    width: 40rem;
+    width: 30rem;
   }
 
   h3 {
