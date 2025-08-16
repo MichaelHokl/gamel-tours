@@ -215,20 +215,40 @@ function App() {
   }
 
   function handleSetAllergies(e) {
-    const newAllergie = { name: text, id: Date.now() };
+    const newAllergie = { name: text, id: crypto.randomUUID() };
     e.preventDefault();
     if (!text) return;
     setAllergies([...allergies, newAllergie]);
     setText("");
   }
 
+  function deleteAllergy(id) {
+    setAllergies(allergies.filter((allergy) => allergy.id !== id));
+  }
+
   function handleItems(id, dataArray, state, setState) {
-    const newItem = dataArray.find((item) => item.id === id);
-    setState([...state, newItem]);
+    const existingItem = state.find((item) => item.id === id);
+
+    if (existingItem) {
+      setState(
+        state.map((item) =>
+          item.id === id ? { ...item, amount: item.amount + 1 } : item
+        )
+      );
+    } else {
+      const newItem = dataArray.find((item) => item.id === id);
+      setState([...state, { ...newItem, amount: 1 }]);
+    }
   }
 
   function deleteItem(id, setState, state) {
-    setState(state.filter((item) => item.id !== id));
+    setState(
+      state
+        .map((item) =>
+          item.id === id ? { ...item, amount: item.amount - 1 } : item
+        )
+        .filter((item) => item.amount > 0)
+    );
   }
 
   return (
@@ -251,6 +271,7 @@ function App() {
         state={{ trips, foods, games, allergies }}
         setters={{ setTrips, setFoods, setGames, setAllergies }}
         deleteItem={deleteItem}
+        deleteAllergy={deleteAllergy}
       />
     </div>
   );
@@ -449,7 +470,7 @@ function AllergyList({ allergies, deleteItem, setState }) {
 function Summary(props) {
   const { trips, foods, games, allergies } = props.state;
   const { setTrips, setFoods, setGames, setAllergies } = props.setters;
-  const { deleteItem } = props;
+  const { deleteItem, deleteAllergy } = props;
 
   const noSelections =
     trips.length === 0 &&
@@ -478,7 +499,7 @@ function Summary(props) {
                     >
                       ❌
                     </button>
-                    {trip.title}
+                    {trip.amount}X -{trip.title}
                   </li>
                 ))}
               </ul>
@@ -494,7 +515,7 @@ function Summary(props) {
                     >
                       ❌
                     </button>
-                    {game.title}
+                    {game.amount}X -{game.title}
                   </li>
                 ))}
               </ul>
@@ -510,7 +531,7 @@ function Summary(props) {
                     >
                       ❌
                     </button>
-                    {food.name}
+                    {food.amount}X -{food.name}
                   </li>
                 ))}
               </ul>
@@ -521,11 +542,7 @@ function Summary(props) {
               <ul aria-label="summary-allergy-list">
                 {allergies.map((allergy) => (
                   <li key={allergy.id}>
-                    <button
-                      onClick={() =>
-                        deleteItem(allergy.id, setAllergies, allergies)
-                      }
-                    >
+                    <button onClick={() => deleteAllergy(allergy.id)}>
                       ❌
                     </button>
                     {allergy.name}

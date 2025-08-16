@@ -258,6 +258,10 @@ form button {
   background-color: #f4f1de;
 }
 
+foote li:hover {
+  transform: scale(1) !important;
+}
+
 .warning {
   padding: 3rem 0;
 }
