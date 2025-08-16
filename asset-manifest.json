@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/gamel-tours/static/css/main.3f7332d1.css",
-    "main.js": "/gamel-tours/static/js/main.35e820e3.js",
+    "main.css": "/gamel-tours/static/css/main.042e65f5.css",
+    "main.js": "/gamel-tours/static/js/main.e7867733.js",
     "index.html": "/gamel-tours/index.html",
-    "main.3f7332d1.css.map": "/gamel-tours/static/css/main.3f7332d1.css.map",
-    "main.35e820e3.js.map": "/gamel-tours/static/js/main.35e820e3.js.map"
+    "main.042e65f5.css.map": "/gamel-tours/static/css/main.042e65f5.css.map",
+    "main.e7867733.js.map": "/gamel-tours/static/js/main.e7867733.js.map"
   },
   "entrypoints": [
-    "static/css/main.3f7332d1.css",
-    "static/js/main.35e820e3.js"
+    "static/css/main.042e65f5.css",
+    "static/js/main.e7867733.js"
   ]
 }
